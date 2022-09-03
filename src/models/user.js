@@ -4,7 +4,12 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const userSchema = new mongoose.Schema({
-  name: {
+  firstname: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  lastname: {
     type: String,
     required: true,
     trim: true,
@@ -31,6 +36,26 @@ const userSchema = new mongoose.Schema({
         throw new Error('Password cannot contain "password"');
       }
     },
+  },
+  addressline: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  city: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  state: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  zip: {
+    type: Number,
+    required: true,
+    trim: true,
   },
   age: {
     type: Number,
