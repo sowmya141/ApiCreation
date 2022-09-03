@@ -3,6 +3,7 @@ const User = require("../models/user");
 const auth = require("../middleware/auth");
 const router = new express.Router();
 
+//create a user
 router.post("/users", async (req, res) => {
   const user = new User(req.body);
 
@@ -10,11 +11,12 @@ router.post("/users", async (req, res) => {
     await user.save();
     const token = await user.generateAuthToken();
     res.status(201).send({ user, token });
-  } catch (e) {
-    res.status(400).send(e);
+  } catch (error) {
+    res.status(400).send({ Error: "Please enter all required fields" });
   }
 });
 
+//login
 router.post("/users/login", async (req, res) => {
   try {
     const user = await User.findByCredentials(
@@ -24,11 +26,12 @@ router.post("/users/login", async (req, res) => {
     const token = await user.generateAuthToken();
     res.send({ user, token });
   } catch (e) {
-    res.status(400).send();
+    res.status(400).send({ Error: "Email/Password is wrong" });
   }
 });
 
-router.patch("/users/me", auth, async (req, res) => {
+//update values
+router.patch("/users/update", auth, async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = ["addressline", "city", "state", "zip"];
   const isValidOperation = updates.every((update) =>

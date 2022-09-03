@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
+    minlength: 3,
   },
   lastname: {
     type: String,
@@ -56,16 +57,9 @@ const userSchema = new mongoose.Schema({
     type: Number,
     required: true,
     trim: true,
+    min: 3,
   },
-  age: {
-    type: Number,
-    default: 0,
-    validate(value) {
-      if (value < 0) {
-        throw new Error("Age must be a postive number");
-      }
-    },
-  },
+
   tokens: [
     {
       token: {
